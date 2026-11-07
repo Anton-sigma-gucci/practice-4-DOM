@@ -1,5 +1,7 @@
 # Практична робота №4 — DOM
 
+https://anton-sigma-gucci.github.io/practice-4-DOM/
+
 ## Опис
 Практична робота присвячена роботі з JavaScript та DOM (Document Object Model).
 
