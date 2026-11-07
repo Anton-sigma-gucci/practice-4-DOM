@@ -1,0 +1,687 @@
+/* ==========================================================================
+   Subscription Calculator — styles
+   ========================================================================== */
+
+/* ---------- Design tokens ---------- */
+:root {
+  --bg: #f5f5fb;
+  --surface: #ffffff;
+  --ink: #1c1b33;
+  --muted: #5f6178;
+  --line: #e2e2ee;
+
+  --accent: #5b4bdb;
+  --accent-strong: #4535c2;
+  --accent-soft: #efecff;
+  --accent-line: #cfc9f7;
+
+  --danger: #c2384a;
+  --success: #17795a;
+  --success-soft: #e5f6ef;
+
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+
+  --shadow-card: 0 1px 2px rgba(45, 35, 130, 0.06), 0 18px 40px -22px rgba(45, 35, 130, 0.28);
+  --shadow-focus: 0 0 0 3px rgba(91, 75, 219, 0.22);
+
+  --font: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --speed: 180ms;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.container {
+  width: min(1160px, 100% - 32px);
+  margin-inline: auto;
+}
+
+/* ---------- Header and hero ---------- */
+.site-header {
+  padding: 20px 0;
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+}
+
+.brand__name {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.site-header__note {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.hero {
+  padding: 24px 0 32px;
+}
+
+.hero h1 {
+  max-width: 20ch;
+  font-size: clamp(2rem, 4.6vw, 3rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.hero p {
+  margin-top: 14px;
+  max-width: 52ch;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+/* ---------- Layout ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 28px;
+  align-items: start;
+}
+
+.builder {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+
+/* ---------- Cards and fieldsets ---------- */
+.card {
+  min-width: 0;
+  margin: 0;
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.card legend {
+  padding: 0;
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.card__hint {
+  margin: -8px 0 16px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* ---------- Selectable options (shared) ---------- */
+.option {
+  position: relative;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color var(--speed) var(--ease),
+              background-color var(--speed) var(--ease),
+              box-shadow var(--speed) var(--ease);
+}
+
+.option:hover {
+  border-color: var(--accent-line);
+}
+
+.option.is-selected,
+.option:has(.option__input:checked),
+.option:has(.switch-input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  box-shadow: var(--shadow-focus);
+}
+
+/* The native input covers the whole card, so the whole card is clickable. */
+.option__input {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  /* Without this, Firefox and Safari ignore width/height on radio inputs
+     and the card would not be clickable. */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.option:has(.option__input:focus-visible),
+.option:has(.switch-input:focus-visible) {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Plans ---------- */
+.plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.plan__body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 20px;
+}
+
+.plan__name {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.plan__badge {
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.plan__desc {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.plan__price {
+  margin: 16px 0;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.plan__price small {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.plan__features {
+  display: grid;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 0.92rem;
+}
+
+.plan__features li {
+  position: relative;
+  padding-left: 24px;
+}
+
+.plan__features li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0.35em;
+  width: 6px;
+  height: 11px;
+  border: solid var(--accent);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* ---------- Billing periods ---------- */
+.periods {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.period {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 16px;
+}
+
+.period__name {
+  font-weight: 700;
+}
+
+.period__save {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.period.is-selected .period__save,
+.period:has(.option__input:checked) .period__save {
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+
+/* ---------- Users ---------- */
+.users {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+}
+
+.users__label {
+  font-weight: 600;
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  overflow: hidden;
+  transition: border-color var(--speed) var(--ease), box-shadow var(--speed) var(--ease);
+}
+
+.stepper:focus-within {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-focus);
+}
+
+.stepper__btn {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  min-height: 48px;
+  border: 0;
+  background: transparent;
+  color: var(--accent-strong);
+  cursor: pointer;
+  transition: background-color var(--speed) var(--ease);
+}
+
+.stepper__btn:hover:not(:disabled) {
+  background: var(--accent-soft);
+}
+
+.stepper__btn:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.stepper__btn:disabled {
+  color: #b4b5c8;
+  cursor: not-allowed;
+}
+
+.stepper__input {
+  width: 84px;
+  border: 0;
+  border-inline: 1.5px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-align: center;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.stepper__input:focus {
+  outline: none;
+}
+
+.stepper__input::-webkit-outer-spin-button,
+.stepper__input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+.users__help {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.users__error {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  color: var(--danger);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: max-height var(--speed) var(--ease), opacity var(--speed) var(--ease);
+}
+
+.users__error.is-visible {
+  max-height: 4em;
+  opacity: 1;
+}
+
+.users.has-error .stepper {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px rgba(194, 56, 74, 0.16);
+}
+
+/* ---------- Add-ons ---------- */
+.addons {
+  display: grid;
+  gap: 12px;
+}
+
+.addon {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px;
+}
+
+.switch-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.switch {
+  position: relative;
+  flex: none;
+  width: 46px;
+  height: 26px;
+  border-radius: 999px;
+  background: #cfd0e2;
+  transition: background-color var(--speed) var(--ease);
+}
+
+.switch::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform var(--speed) var(--ease);
+}
+
+.switch-input:checked + .switch {
+  background: var(--accent);
+}
+
+.switch-input:checked + .switch::after {
+  transform: translateX(20px);
+}
+
+.addon__text {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+}
+
+.addon__name {
+  font-weight: 700;
+}
+
+.addon__desc {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.addon__price {
+  flex: none;
+  text-align: right;
+  font-weight: 700;
+}
+
+.addon__price small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+/* ---------- Summary ---------- */
+.summary {
+  position: sticky;
+  top: 24px;
+}
+
+.summary h2 {
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.summary__list {
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.95rem;
+}
+
+.row dt {
+  color: var(--muted);
+}
+
+.row dd {
+  margin: 0;
+  font-weight: 600;
+  text-align: right;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+.total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+  padding: 18px 20px;
+  border-radius: var(--radius-md);
+  background: var(--accent);
+  color: #fff;
+}
+
+.total__label {
+  font-weight: 600;
+}
+
+.total__value {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.summary__note {
+  margin: 12px 0 20px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* ---------- Button ---------- */
+.btn {
+  width: 100%;
+  padding: 15px 20px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--ink);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color var(--speed) var(--ease),
+              transform var(--speed) var(--ease),
+              box-shadow var(--speed) var(--ease);
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--accent-strong);
+  box-shadow: 0 10px 24px -12px rgba(69, 53, 194, 0.7);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.btn:disabled {
+  background: #b9b9cf;
+  cursor: not-allowed;
+}
+
+/* ---------- Confirmation message ---------- */
+.confirmation {
+  max-height: 0;
+  margin-top: 0;
+  padding: 0 14px;
+  overflow: hidden;
+  opacity: 0;
+  border-radius: var(--radius-sm);
+  background: var(--success-soft);
+  color: var(--success);
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: max-height 260ms var(--ease),
+              opacity 260ms var(--ease),
+              margin-top 260ms var(--ease),
+              padding 260ms var(--ease);
+}
+
+.confirmation.is-visible {
+  max-height: 200px;
+  margin-top: 14px;
+  padding: 12px 14px;
+  opacity: 1;
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  margin-top: 40px;
+  padding: 24px 0 40px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .summary {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .card {
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .hero {
+    padding: 8px 0 24px;
+  }
+
+  .periods {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .addon {
+    flex-wrap: wrap;
+    gap: 12px 14px;
+  }
+
+  .addon__price {
+    margin-left: 60px;
+    text-align: left;
+  }
+
+  .site-header__note {
+    display: none;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

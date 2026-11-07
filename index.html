@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Subscription Calculator: choose a plan, billing period, team size and add-ons to see your total instantly.">
+  <title>Subscription Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="#" aria-label="Flowdesk home">
+        <svg class="brand__mark" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect width="32" height="32" rx="10" fill="#5b4bdb"></rect>
+          <path d="M9 21V11h7.5a3.5 3.5 0 0 1 0 7H13" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <span class="brand__name">Flowdesk</span>
+      </a>
+      <p class="site-header__note">Pricing calculator</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero" aria-labelledby="page-title">
+      <h1 id="page-title">Price your team's plan in seconds</h1>
+      <p>Pick a plan, set your team size and add what you need. The total updates as you go.</p>
+    </section>
+
+    <form id="subscription-form" class="layout" novalidate>
+      <div class="builder">
+
+        <!-- Plans -->
+        <fieldset class="card">
+          <legend>Plan</legend>
+          <div class="plans">
+            <div class="option plan">
+              <input class="option__input" type="radio" name="plan" value="Basic" data-price="5"
+                     aria-labelledby="plan-basic-name" aria-describedby="plan-basic-desc">
+              <div class="plan__body">
+                <h3 class="plan__name" id="plan-basic-name">Basic</h3>
+                <p class="plan__desc" id="plan-basic-desc">For small teams getting started.</p>
+                <p class="plan__price">$5 <small>per user / month</small></p>
+                <ul class="plan__features">
+                  <li>Core project boards</li>
+                  <li>Basic reporting</li>
+                  <li>Community support</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="option plan">
+              <input class="option__input" type="radio" name="plan" value="Standard" data-price="10" checked
+                     aria-labelledby="plan-standard-name" aria-describedby="plan-standard-desc">
+              <div class="plan__body">
+                <h3 class="plan__name" id="plan-standard-name">Standard <span class="plan__badge">Popular</span></h3>
+                <p class="plan__desc" id="plan-standard-desc">For growing teams that ship together.</p>
+                <p class="plan__price">$10 <small>per user / month</small></p>
+                <ul class="plan__features">
+                  <li>Everything in Basic</li>
+                  <li>Unlimited projects</li>
+                  <li>Workflow automations</li>
+                  <li>Email support</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="option plan">
+              <input class="option__input" type="radio" name="plan" value="Premium" data-price="15"
+                     aria-labelledby="plan-premium-name" aria-describedby="plan-premium-desc">
+              <div class="plan__body">
+                <h3 class="plan__name" id="plan-premium-name">Premium</h3>
+                <p class="plan__desc" id="plan-premium-desc">For companies that need control and scale.</p>
+                <p class="plan__price">$15 <small>per user / month</small></p>
+                <ul class="plan__features">
+                  <li>Everything in Standard</li>
+                  <li>Custom roles and permissions</li>
+                  <li>Audit log</li>
+                  <li>Guided onboarding</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Billing period -->
+        <fieldset class="card">
+          <legend>Billing period</legend>
+          <p class="card__hint">Longer commitments cost less per month.</p>
+          <div class="periods">
+            <label class="option period">
+              <input class="option__input" type="radio" name="period" value="1"
+                     data-months="1" data-discount="0" data-label="1 month">
+              <span class="period__name">1 month</span>
+              <span class="period__save">Standard price</span>
+            </label>
+            <label class="option period">
+              <input class="option__input" type="radio" name="period" value="3"
+                     data-months="3" data-discount="5" data-label="3 months">
+              <span class="period__name">3 months</span>
+              <span class="period__save">Save 5%</span>
+            </label>
+            <label class="option period">
+              <input class="option__input" type="radio" name="period" value="6"
+                     data-months="6" data-discount="10" data-label="6 months" checked>
+              <span class="period__name">6 months</span>
+              <span class="period__save">Save 10%</span>
+            </label>
+            <label class="option period">
+              <input class="option__input" type="radio" name="period" value="12"
+                     data-months="12" data-discount="20" data-label="12 months">
+              <span class="period__name">12 months</span>
+              <span class="period__save">Save 20%</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Users -->
+        <fieldset class="card">
+          <legend>Team size</legend>
+          <div class="users" id="users-field">
+            <label class="users__label" for="users">Number of users</label>
+            <div class="stepper">
+              <button class="stepper__btn" type="button" data-step="-1" aria-label="Remove one user">
+                <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </button>
+              <input id="users" name="users" class="stepper__input" type="number"
+                     min="1" max="100" step="1" value="5" inputmode="numeric"
+                     aria-describedby="users-help users-error" required>
+              <button class="stepper__btn" type="button" data-step="1" aria-label="Add one user">
+                <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8h10M8 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+            <p class="users__help" id="users-help">Between 1 and 100 users.</p>
+            <p class="users__error" id="users-error" role="alert"></p>
+          </div>
+        </fieldset>
+
+        <!-- Add-ons -->
+        <fieldset class="card">
+          <legend>Add-ons</legend>
+          <p class="card__hint">Turn on only what your team needs.</p>
+          <div class="addons">
+            <label class="option addon">
+              <input class="switch-input" type="checkbox" name="addon" value="Extended Support" data-price="3">
+              <span class="switch" aria-hidden="true"></span>
+              <span class="addon__text">
+                <span class="addon__name">Extended Support</span>
+                <span class="addon__desc">Replies within 4 business hours.</span>
+              </span>
+              <span class="addon__price">+$3 <small>per user / month</small></span>
+            </label>
+            <label class="option addon">
+              <input class="switch-input" type="checkbox" name="addon" value="Cloud Storage" data-price="2">
+              <span class="switch" aria-hidden="true"></span>
+              <span class="addon__text">
+                <span class="addon__name">Cloud Storage</span>
+                <span class="addon__desc">Extra space for files and attachments.</span>
+              </span>
+              <span class="addon__price">+$2 <small>per user / month</small></span>
+            </label>
+            <label class="option addon">
+              <input class="switch-input" type="checkbox" name="addon" value="Advanced Analytics" data-price="4">
+              <span class="switch" aria-hidden="true"></span>
+              <span class="addon__text">
+                <span class="addon__name">Advanced Analytics</span>
+                <span class="addon__desc">Custom dashboards and exportable reports.</span>
+              </span>
+              <span class="addon__price">+$4 <small>per user / month</small></span>
+            </label>
+          </div>
+        </fieldset>
+      </div>
+
+      <!-- Summary -->
+      <aside class="summary card" aria-labelledby="summary-title">
+        <h2 id="summary-title">Order summary</h2>
+
+        <dl class="summary__list">
+          <div class="row"><dt>Plan</dt><dd id="out-plan"></dd></div>
+          <div class="row"><dt>Users</dt><dd id="out-users"></dd></div>
+          <div class="row"><dt>Duration</dt><dd id="out-period"></dd></div>
+          <div class="row"><dt>Add-ons</dt><dd id="out-addons"></dd></div>
+          <div class="row"><dt>Subtotal</dt><dd id="out-subtotal"></dd></div>
+          <div class="row"><dt>Discount</dt><dd id="out-discount"></dd></div>
+        </dl>
+
+        <div class="total">
+          <span class="total__label">Total</span>
+          <strong class="total__value" id="out-total" aria-live="polite"></strong>
+        </div>
+        <p class="summary__note" id="out-note"></p>
+
+        <button class="btn" id="confirm-btn" type="submit">Confirm subscription</button>
+        <div class="confirmation" id="confirmation" role="status"></div>
+      </aside>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>Demo calculator. No payment is processed.</p>
+      <p id="viewport-info"></p>
+    </div>
+  </footer>
+</body>
+</html>
